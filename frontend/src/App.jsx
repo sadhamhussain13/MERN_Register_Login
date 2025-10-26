@@ -8,10 +8,10 @@ import { useAuth } from "./context/AuthProvider"
 
 function App() {
 
-    // 🔑 STEP 2: Remove or comment out the local useState for user/setUser
+    // Remove or comment out the local useState for user/setUser
     // const [user, setUser] = useState(null); 
 
-    // 🔑 STEP 3: Destructure setUser from your useAuth context
+    // Destructure setUser from your useAuth context
     const { setUser } = useAuth(); 
 
     useEffect(() => {
@@ -29,7 +29,7 @@ function App() {
                     setUser(null); // This now calls the context's setter (Fixes the error)
                 });
         }
-    // 🔑 STEP 4: Add setUser to the dependency array
+    //  Add setUser to the dependency array
     }, [setUser]);
 
 //   const [user, setUser] = useState(null);

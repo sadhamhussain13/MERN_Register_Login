@@ -37,7 +37,7 @@ export const Login = () => {
         //     console.log(error.message);
         // }
         catch(error){
-            // 🔑 FIX: This block handles all non-2xx status codes (like 401 Unauthorized, 400 Bad Request, network errors)
+            //  This block handles all non-2xx status codes (like 401 Unauthorized, 400 Bad Request, network errors)
             
             // Extract the specific error message from the server response
             const serverMessage = error.response?.data?.message;
@@ -47,7 +47,7 @@ export const Login = () => {
             
             console.error("Login attempt failed:", errorMessage);
             
-            // 🔑 Display the error message to the user
+            //  Display the error message to the user
             if (serverMessage) {
                 toast.error(serverMessage); // Show specific error from server (e.g., "Invalid password")
             } else {

@@ -75,14 +75,14 @@ router.get("/verifyToken", (req, res) => {
     if (err) return res.status(403).json({ message: "Invalid token" });
     
     try {
-      // 🔑 Fetch the user's name from the database using the ID from the token
+      // Fetch the user's name from the database using the ID from the token
       const user = await User.findById(decoded.userId).select('name email'); // Only select needed fields
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // 🔑 Send back the user data the frontend expects (e.g., { name: "...", email: "..." })
+      //  Send back the user data the frontend expects (e.g., { name: "...", email: "..." })
       res.json({ success: true, user: { name: user.name, email: user.email } });
       
     } catch (error) {

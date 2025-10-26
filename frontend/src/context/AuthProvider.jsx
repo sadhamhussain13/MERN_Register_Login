@@ -16,7 +16,7 @@ export const AuthProvider = ({children}) => {
             ? (userData.name || userData.username) // Try 'name' or 'username'
             : 'User'; // Fallback name
         
-        // 🔑 FIX: Use the safely determined userName variable
+        //  Use the safely determined userName variable
         toast.success(`Login successful! Welcome, ${userName}.`); 
 
     }
