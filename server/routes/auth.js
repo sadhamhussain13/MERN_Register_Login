@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => { //router.post("/signup"): defines
         console.error("Error during User registration:", error.message);
         return res.status(500).json({message: "Server error"});
     }
-  res.send("User registered"); //res.send(): sends a response back to the client.
+    res.send("User registered"); //res.send(): sends a response back to the client.
 });
 
 router.post("/login", async (req, res) => { //router.post("/signup"): defines a route that handles POST requests (used for sending form data securely).
@@ -63,6 +63,33 @@ router.post("/login", async (req, res) => { //router.post("/signup"): defines a 
     }
 });
 
+// auth.js - New /api/verifyToken logic
 
+router.get("/verifyToken", (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ message: "No token provided" });
+
+  const token = authHeader.split(" ")[1];
+  
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => { // 🔑 Use process.env.JWT_SECRET for consistency!
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    
+    try {
+      // 🔑 Fetch the user's name from the database using the ID from the token
+      const user = await User.findById(decoded.userId).select('name email'); // Only select needed fields
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // 🔑 Send back the user data the frontend expects (e.g., { name: "...", email: "..." })
+      res.json({ success: true, user: { name: user.name, email: user.email } });
+      
+    } catch (error) {
+      console.error("Database error during token verification:", error);
+      return res.status(500).json({ message: "Server error during user lookup" });
+    }
+  });
+});
 
 export default router;

@@ -3,6 +3,7 @@ import cors from 'cors';  //cors(): enables communication between different doma
 import authRoutes from './routes/auth.js'; // This means any route starting with /api/auth will be handled by the auth.js file.
 import connectToMongoDB from './database/db.js'; // connectDB: function to connect to MongoDB.
 import dotenv from "dotenv";
+import router from './routes/auth.js';
 dotenv.config();
 
 const app = express();
